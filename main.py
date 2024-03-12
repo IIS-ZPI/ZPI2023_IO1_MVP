@@ -1,3 +1,5 @@
+# Function to add two numbers a and b.
+# Returns sum of the given pair.
 def IArithemeticsAdd(a, b):
     return a+b
 
