@@ -4,7 +4,6 @@ def IArithemeticsAdd(a, b):
 def IArithemeticsDiff(a, b):
     return a-b
 
-
 def IArithmeticsMult(a, b):
     return a * b
 
