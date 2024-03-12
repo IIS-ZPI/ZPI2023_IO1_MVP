@@ -12,6 +12,7 @@ def Division(A: float, B: float) -> float:
     raise Exception("Can not divide by 0")
   return A / B
 
+# Print section
 print("MVP DevOps sevv00")
 print("kaszczu02 97536423")
 print("JakGin ID: 84508832")
