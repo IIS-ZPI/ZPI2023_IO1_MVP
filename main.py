@@ -7,6 +7,7 @@ def IArithemeticsDiff(a, b):
 def IArithmeticsMult(a, b):
     return a * b
 
+# Function has type hints to be more readable
 def Division(A: float, B: float) -> float:
   if B == 0:
     raise Exception("Can not divide by 0")
