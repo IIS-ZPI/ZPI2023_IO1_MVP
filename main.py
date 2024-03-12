@@ -1,9 +1,11 @@
 def IArithemeticsAdd(a, b):
     return a+b
 
+#Diff
 def IArithemeticsDiff(a, b):
     return a-b
 
+#Mult
 def IArithmeticsMult(a, b):
     return a * b
 
