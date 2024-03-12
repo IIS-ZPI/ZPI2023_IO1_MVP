@@ -1,5 +1,3 @@
-# Our very professional program (MVP Team)
-
 def IArithemeticsAdd(a, b):
     return a+b
 
