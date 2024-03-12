@@ -1,5 +1,4 @@
 #Add
-#Add2
 def IArithemeticsAdd(a, b):
     return a+b
 
