@@ -1,6 +1,7 @@
 def IArithemeticsAdd(a, b):
     return a+b
 
+#A diff B
 def IArithemeticsDiff(a, b):
     return a-b
 
