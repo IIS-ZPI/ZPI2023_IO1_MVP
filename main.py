@@ -11,6 +11,7 @@ def IArithmeticsMult(a, b):
     return a * b
 
 #Divide
+# Function to divive A by B
 def Division(A: float, B: float) -> float:
   if B == 0:
     raise Exception("Can not divide by 0")
