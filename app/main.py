@@ -1,4 +1,4 @@
-# You can can this file from the root directory of the project by running `python -m app.main`
+# You can ran this file from the root directory of the project by running `python -m app.main`
 from datetime import date
 
 from .api import get_changes_distribution
