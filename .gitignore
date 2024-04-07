@@ -1,6 +1,6 @@
+# Pytest
 .pytest_cache/
-.DS_Store
-out
+__pycache__/
 
 # Pycharm
 .idea/
@@ -17,3 +17,6 @@ ipython_config.py
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+.DS_Store
+out
