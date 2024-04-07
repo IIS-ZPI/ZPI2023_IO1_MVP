@@ -2,8 +2,8 @@ from datetime import date, timedelta
 
 import pytest
 
-from api import get_changes_distribution
-from constans import AnalysisPeriod
+from app.api import get_changes_distribution
+from app.constans import AnalysisPeriod
 
 
 def test_invalid_currency_1():
@@ -59,7 +59,9 @@ def test_invalid_start_date_format():
     assert str(e.value) == "Invalid request parameters"
 
     with pytest.raises(ValueError) as e:
-        get_changes_distribution("EUR", "USD", date(2012, 13, 1), AnalysisPeriod.QUARTER)
+        get_changes_distribution(
+            "EUR", "USD", date(2012, 13, 1), AnalysisPeriod.QUARTER
+        )
     assert str(e.value) == "month must be in 1..12"
 
     start_date = date.today() + timedelta(days=10)
@@ -95,7 +97,9 @@ def test_valid_requests():
     assert sum(hist) == 22
 
     start_date = date.today() - timedelta(days=10)
-    hist, bins = get_changes_distribution("EUR", "USD", start_date, AnalysisPeriod.MONTH)
+    hist, bins = get_changes_distribution(
+        "EUR", "USD", start_date, AnalysisPeriod.MONTH
+    )
     assert len(hist) == 14
     assert len(bins) == 15
     assert round(bins[0], 4) == -0.0076
@@ -105,7 +109,9 @@ def test_valid_requests():
     assert sum(hist) == 5
 
     start_date = date.today() - timedelta(days=40)
-    hist, bins = get_changes_distribution("EUR", "USD", start_date, AnalysisPeriod.QUARTER)
+    hist, bins = get_changes_distribution(
+        "EUR", "USD", start_date, AnalysisPeriod.QUARTER
+    )
     assert len(hist) == 14
     assert len(bins) == 15
     assert round(bins[0], 4) == -0.0076
@@ -115,7 +121,9 @@ def test_valid_requests():
     assert sum(hist) == 27
 
     start_date = date.today() - timedelta(days=110)
-    hist, bins = get_changes_distribution("EUR", "USD", start_date, AnalysisPeriod.QUARTER)
+    hist, bins = get_changes_distribution(
+        "EUR", "USD", start_date, AnalysisPeriod.QUARTER
+    )
     assert len(hist) == 14
     assert len(bins) == 15
     assert round(bins[0], 4) == -0.0078

@@ -3,10 +3,12 @@ from datetime import date, timedelta
 import numpy as np
 import requests
 
-from constans import AnalysisPeriod
+from .constans import AnalysisPeriod
 
 
-def get_sessions_data(currency: str, analysisPeriod: AnalysisPeriod) -> tuple[int, int, int]:
+def get_sessions_data(
+    currency: str, analysisPeriod: AnalysisPeriod
+) -> tuple[int, int, int]:
     """
     Args:
         currency (str): The currency code for which session data is to be retrieved.
@@ -20,7 +22,9 @@ def get_sessions_data(currency: str, analysisPeriod: AnalysisPeriod) -> tuple[in
     pass
 
 
-def get_statistical_measures(currency: str, analysisPeriod: AnalysisPeriod) -> tuple[float, float, float, float]:
+def get_statistical_measures(
+    currency: str, analysisPeriod: AnalysisPeriod
+) -> tuple[float, float, float, float]:
     """
     Args:
         currency (str): The currency code for which statistical measures are to be calculated.
@@ -33,7 +37,9 @@ def get_statistical_measures(currency: str, analysisPeriod: AnalysisPeriod) -> t
     pass
 
 
-def get_changes_distribution(currency_1: str, currency_2: str, start_date: date, analysisPeriod: AnalysisPeriod) -> tuple[list, list]:
+def get_changes_distribution(
+    currency_1: str, currency_2: str, start_date: date, analysisPeriod: AnalysisPeriod
+) -> tuple[list, list]:
     """
     Args:
         currency_1 (str): The currency code for the first currency.
@@ -47,7 +53,7 @@ def get_changes_distribution(currency_1: str, currency_2: str, start_date: date,
     date_today = date.today()
     if start_date > date.today():
         raise ValueError("Start date cannot be in the future")
-    
+
     dates = []
     match analysisPeriod:
         case AnalysisPeriod.QUARTER:
@@ -68,10 +74,12 @@ def get_changes_distribution(currency_1: str, currency_2: str, start_date: date,
             dates.append((start_date, end_date))
         case _:
             raise ValueError("Analysis period must be either 'QUARTER' or 'MONTH'")
-    
+
     dates_str = []
     for element in dates:
-        dates_str.append((element[0].strftime('%Y-%m-%d'), element[1].strftime('%Y-%m-%d')))
+        dates_str.append(
+            (element[0].strftime("%Y-%m-%d"), element[1].strftime("%Y-%m-%d"))
+        )
 
     # api_data holds elements like (date, currency1_rate, currency2_rate)
     api_data: list[date, float, float] = []
@@ -89,7 +97,9 @@ def get_changes_distribution(currency_1: str, currency_2: str, start_date: date,
                 for rate1, rate2 in zip(data1["rates"], data2["rates"]):
                     if rate1["effectiveDate"] != rate2["effectiveDate"]:
                         raise ValueError("Data inconsistency")
-                    api_data.append((rate1["effectiveDate"], rate1["mid"], rate2["mid"]))
+                    api_data.append(
+                        (rate1["effectiveDate"], rate1["mid"], rate2["mid"])
+                    )
             else:
                 raise ValueError("Invalid request parameters")
         except requests.RequestException as e:
