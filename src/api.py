@@ -1,6 +1,9 @@
-from datetime import date
+from datetime import date, timedelta
 
-from src.constans import AnalysisPeriod
+import numpy as np
+import requests
+
+from constans import AnalysisPeriod
 
 
 def get_sessions_data(currency: str, analysisPeriod: AnalysisPeriod) -> tuple[int, int, int]:
