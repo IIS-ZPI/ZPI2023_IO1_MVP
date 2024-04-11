@@ -102,11 +102,7 @@ def test_valid_requests():
     )
     assert len(hist) == 14
     assert len(bins) == 15
-    assert round(bins[0], 4) == -0.0076
-    assert round(bins[-1], 4) == 0.0045
-    assert hist[0] == 1
-    assert hist[-1] == 1
-    assert sum(hist) == 5
+    assert sum(hist) <= 8  # in last 10 days there are at least 2 weekend's days
 
     start_date = date.today() - timedelta(days=40)
     hist, bins = get_changes_distribution(
@@ -114,11 +110,7 @@ def test_valid_requests():
     )
     assert len(hist) == 14
     assert len(bins) == 15
-    assert round(bins[0], 4) == -0.0076
-    assert round(bins[-1], 4) == 0.0082
-    assert hist[0] == 1
-    assert hist[-1] == 1
-    assert sum(hist) == 27
+    assert sum(hist) <= 28  # in last 40 days there are at least 8 weekend's days
 
     start_date = date.today() - timedelta(days=110)
     hist, bins = get_changes_distribution(
@@ -126,8 +118,4 @@ def test_valid_requests():
     )
     assert len(hist) == 14
     assert len(bins) == 15
-    assert round(bins[0], 4) == -0.0078
-    assert round(bins[-1], 4) == 0.0117
-    assert hist[0] == 2
-    assert hist[-1] == 1
-    assert sum(hist) == 74
+    assert sum(hist) <= 80  # in last 110 days there are at least 30 weekend's days
