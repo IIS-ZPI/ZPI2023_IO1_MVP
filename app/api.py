@@ -1,3 +1,5 @@
+import statistics
+from collections import Counter
 from datetime import date, timedelta
 
 import numpy as np
@@ -7,7 +9,7 @@ from .constans import AnalysisPeriod
 
 
 def get_sessions_data(
-    currency: str, analysisPeriod: AnalysisPeriod
+        currency: str, analysisPeriod: AnalysisPeriod
 ) -> tuple[int, int, int]:
     """
     Args:
@@ -19,11 +21,66 @@ def get_sessions_data(
             decline sessions, and unchanged sessions.
 
     """
-    pass
+
+    date_today = date.today()
+
+    match analysisPeriod:
+        case AnalysisPeriod.WEEK:
+            date_start = date_today - timedelta(days=6)
+        case AnalysisPeriod.TWO_WEEKS:
+            date_start = date_today - timedelta(days=13)
+        case AnalysisPeriod.MONTH:
+            date_start = date_today - timedelta(days=29)
+        case AnalysisPeriod.QUARTER:
+            date_start = date_today - timedelta(days=89)
+        case AnalysisPeriod.HALF_YEAR:
+            date_start = date_today - timedelta(days=179)
+        case AnalysisPeriod.YEAR:
+            date_start = date_today - timedelta(days=364)
+        case _:
+            raise ValueError(f"Error: not a time period")
+
+    url = f"http://api.nbp.pl/api/exchangerates/rates/a/" + currency + "/" + date_start.strftime("%Y-%m-%d")
+    url = url + "/" + date_today.strftime("%Y-%m-%d") + "/?format=json"
+    # print(url)
+
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+        else:
+            raise ValueError("Invalid request parameters")
+    except requests.RequestException as e:
+        print("Error:", e)
+
+    rising_sessions = 0
+    falling_sessions = 0
+    no_changes = 0
+    status_flag = -2
+    days = len(data['rates'])
+
+    for day in range(0, days-1):
+        if data['rates'][day+1]['mid'] > data['rates'][day]['mid']:
+            flag = 1
+        elif data['rates'][day+1]['mid'] < data['rates'][day]['mid']:
+            flag = -1
+        else:
+            flag = 0
+
+        if flag != status_flag:
+            status_flag = flag
+            if status_flag == -1:
+                falling_sessions += 1
+            elif status_flag == 1:
+                rising_sessions += 1
+            else:
+                no_changes += 1
+
+    return rising_sessions, falling_sessions, no_changes
 
 
 def get_statistical_measures(
-    currency: str, analysisPeriod: AnalysisPeriod
+        currency: str, analysisPeriod: AnalysisPeriod
 ) -> tuple[float, float, float, float]:
     """
     Args:
@@ -34,11 +91,52 @@ def get_statistical_measures(
         tuple: A tuple containing four float values representing statistical measures (median, mode, standard deviation,
             and coefficient of variation).
     """
-    pass
+
+    date_today = date.today()
+
+    match analysisPeriod:
+        case AnalysisPeriod.WEEK:
+            date_start = date_today - timedelta(days=6)
+        case AnalysisPeriod.TWO_WEEKS:
+            date_start = date_today - timedelta(days=13)
+        case AnalysisPeriod.MONTH:
+            date_start = date_today - timedelta(days=29)
+        case AnalysisPeriod.QUARTER:
+            date_start = date_today - timedelta(days=89)
+        case AnalysisPeriod.HALF_YEAR:
+            date_start = date_today - timedelta(days=179)
+        case AnalysisPeriod.YEAR:
+            date_start = date_today - timedelta(days=364)
+        case _:
+            raise ValueError(f"Error: not a time period")
+
+    url = f"http://api.nbp.pl/api/exchangerates/rates/a/" + currency + "/" + date_start.strftime("%Y-%m-%d")
+    url = url + "/" + date_today.strftime("%Y-%m-%d") + "/?format=json"
+    # print(url)
+
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+        else:
+            raise ValueError("Invalid request parameters")
+    except requests.RequestException as e:
+        print("Error:", e)
+
+    mid_values = [rate['mid'] for rate in data['rates']]
+    mid_values.sort()
+
+    median_value = statistics.median(mid_values)
+    mode = statistics.mode(mid_values)
+    standard_deviation = statistics.stdev(mid_values)
+    mean_value = statistics.mean(mid_values)
+    coefficient_of_variation = standard_deviation/mean_value
+
+    return median_value, mode, standard_deviation, coefficient_of_variation
 
 
 def get_changes_distribution(
-    currency_1: str, currency_2: str, start_date: date, analysisPeriod: AnalysisPeriod
+        currency_1: str, currency_2: str, start_date: date, analysisPeriod: AnalysisPeriod
 ) -> tuple[list, list]:
     """
     Args:
