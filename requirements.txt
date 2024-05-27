@@ -1,3 +1,5 @@
 requests
 pytest
 numpy
+PySide6
+matplotlib
