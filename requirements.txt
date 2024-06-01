@@ -1,5 +1,6 @@
-requests
-pytest
-numpy
+requests~=2.31.0
+pytest~=7.4.0
+numpy~=1.26.4
+freezegun~=1.1.0
 PySide6
 matplotlib
