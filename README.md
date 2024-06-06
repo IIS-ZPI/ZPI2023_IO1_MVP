@@ -1,6 +1,12 @@
 # MVP
 ## Tech Stack
-- Python with libraries
+- Python with libraries:
+    - requests version 2.31.0 
+    - pytest version 7.4.0
+    - numpy version 1.26.4 
+    - freezegun version 1.1.0 
+    - PySide6 version 6.7.1 
+    - matplotlib version 3.9.0 
 ## Local Preview
 ## Backlog
 Project backlog available at: https://trello.com/b/rRiilgsa/zpinf
