@@ -8,6 +8,9 @@
     - PySide6 version 6.7.1 
     - matplotlib version 3.9.0 
 ## Local Preview
+1. Install Python (install at least version 3.12)
+2. Install all dependencies (python libraries in [.requirements.txt])
+3. Run [.app/main.py] using command line or IDE
 ## Backlog
 Project backlog available at: https://trello.com/b/rRiilgsa/zpinf
 ## CI System
