@@ -104,7 +104,8 @@ class MainWindow(QMainWindow):
 
         self.canvas = MplCanvas(hist, bins)
 
-        self.ui.verticalLayout_4.insertWidget(2, self.canvas)
+        self.ui.verticalLayout_4.replaceWidget(self.ui.widgetDistribution, self.canvas)
+        self.ui.widgetDistribution.deleteLater()
 
         self.buttonGroup.buttonClicked.connect(self.on_update_distribution)
         self.ui.comboBoxDistribution1.currentIndexChanged.connect(self.on_update_distribution)
