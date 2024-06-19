@@ -1,7 +1,19 @@
 # MVP
 ## Tech Stack
-- Python with libraries
+- Python with libraries:
+    - requests version 2.31.0 
+    - pytest version 7.4.0
+    - numpy version 1.26.4 
+    - freezegun version 1.1.0 
+    - PySide6 version 6.7.1 
+    - matplotlib version 3.9.0 
 ## Local Preview
+1. Install Python (install at least version 3.12)
+2. Install all dependencies (python libraries in [.requirements.txt](requirements.txt))
+    - with <b> pip install -r [.requirements.txt](requirements.txt) <b> command
+    - with <b> pip install "module_name" <b> command for every module in [.requirements.txt](requirements.txt)
+    - using specific IDE tools for example PyCharm Python Packages 
+3. Run [.app/main.py](app/main.py) using command line or IDE
 ## Backlog
 Project backlog available at: https://trello.com/b/rRiilgsa/zpinf
 ## CI System
