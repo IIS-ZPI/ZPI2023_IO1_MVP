@@ -79,7 +79,7 @@ class MainWindow(QMainWindow):
     def setup_distribution_page(self):
         self.ui.pushButtonBackToMain3.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
 
-        today = date.today() - timedelta(days=29)
+        today = date.today() - timedelta(days=30)
         self.ui.dateEdit.setDate(QDate(today.year, today.month, today.day))
         self.ui.comboBoxDistribution1.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.comboBoxDistribution2.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
@@ -110,16 +110,25 @@ class MainWindow(QMainWindow):
         self.buttonGroup.buttonClicked.connect(self.on_update_distribution)
         self.ui.comboBoxDistribution1.currentIndexChanged.connect(self.on_update_distribution)
         self.ui.comboBoxDistribution2.currentIndexChanged.connect(self.on_update_distribution)
+
+        self.prev_date = None
         self.ui.dateEdit.dateChanged.connect(self.on_update_distribution)
 
     def on_update_distribution(self):
-        hist, bins = get_changes_distribution(
-            self.ui.comboBoxDistribution1.currentText(),
-            self.ui.comboBoxDistribution2.currentText(),
-            self.ui.dateEdit.date().toPython(),
-            AnalysisPeriod.MONTH if self.ui.pushButtonMonth.isChecked() else AnalysisPeriod.QUARTER)
 
-        self.canvas.plot_data(hist, bins)
+        try:
+            hist, bins = get_changes_distribution(
+                self.ui.comboBoxDistribution1.currentText(),
+                self.ui.comboBoxDistribution2.currentText(),
+                self.ui.dateEdit.date().toPython(),
+                AnalysisPeriod.MONTH if self.ui.pushButtonMonth.isChecked() else AnalysisPeriod.QUARTER)
+
+            self.canvas.plot_data(hist, bins)
+            self.ui.dateEdit.setStyleSheet("")
+        except Exception as e:
+            self.ui.dateEdit.setDate(self.prev_date)
+        finally:
+            self.prev_date = self.ui.dateEdit.date()
 
 
 class MplCanvas(FigureCanvas):
