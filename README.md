@@ -21,7 +21,7 @@ Project documentation available at [documentation](https://tulodz-my.sharepoint.
 ## Backlog
 Project backlog available at: https://trello.com/b/rRiilgsa/zpinf
 ## CI System
-GitHub Actions is used to test if project builds successfully after every new PR on main, release and develop branches. 
+GitHub Actions is used to test if project builds successfully after every new PR on main, release and develop branches. After PR on branch release automatically create new release with new tag.<br>
 Workflow scripts you can find in: [.github/workflows](https://github.com/IIS-ZPI/ZPI2023_IO1_MVP/tree/release/.github/workflows) in project files.
 ## CI Raports
 Project raports available at: https://github.com/IIS-ZPI/ZPI2023_IO1_MVP/actions
