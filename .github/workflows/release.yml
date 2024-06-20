@@ -1,5 +1,10 @@
 name: Create Release on PR Merge
 
+on:
+  pull_request:
+    branches:
+      - release
+
 release:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.base_ref == 'release' && success()
@@ -11,7 +16,7 @@ release:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
