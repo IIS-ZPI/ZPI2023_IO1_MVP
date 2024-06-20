@@ -14,6 +14,8 @@
     - with <b> pip install "module_name" <b> command for every module in [.requirements.txt](requirements.txt)
     - using specific IDE tools for example PyCharm Python Packages 
 3. Run [.app/main.py](app/main.py) using command line or IDE
+## Project documentation
+Project documentation available at [documentation](https://tulodz-my.sharepoint.com/:w:/r/personal/240664_edu_p_lodz_pl/_layouts/15/Doc.aspx?sourcedoc=%7B8F73AE95-2F40-4615-AA85-ED68C0AFAD9A%7D&file=Requirements%20specification.docx&action=default&mobileredirect=true&DefaultItemOpen=1&wdsle=0)
 ## Backlog
 Project backlog available at: https://trello.com/b/rRiilgsa/zpinf
 ## CI System
