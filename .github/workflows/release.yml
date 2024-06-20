@@ -1,35 +1,45 @@
 name: Create Release on PR Merge
 
-  release:
- - name: Calculate new tag
-      id: calc_new_tag
-      run: |
-        latest_tag=${{ steps.get_latest_tag.outputs.tag }}
-        tag_number=$(echo $latest_tag | sed -e 's/^v//')
-        IFS='.' read -r -a parts <<< "$tag_number"
-        major=${parts[0]}
-        minor=${parts[1]}
-        patch=${parts[2]}
-        new_patch=$((patch + 1))
-        new_tag="v$major.$minor.$new_patch"
-        echo "New tag: $new_tag"
-        echo "::set-output name=new_tag::$new_tag"
+release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.base_ref == 'release' && success()
 
-    - name: Create new tag
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
       run: |
-        new_tag=${{ steps.calc_new_tag.outputs.new_tag }}
-        git tag $new_tag
-        git push origin $new_tag
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Build executable
+      run: |
+        pip install pyinstaller
+        pyinstaller --onefile app/main.py
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Create GitHub release
-      uses: actions/create-release@v1
       with:
-        tag_name: ${{ steps.calc_new_tag.outputs.new_tag }}
-        release_name: ${{ steps.calc_new_tag.outputs.new_tag }}
-        body: "Release ${{ steps.calc_new_tag.outputs.new_tag }}"
+        tag_name: v2.0.0-${{ github.run_number }}
+        release_name: Release ${{ github.run_number }}
         draft: false
         prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/main.exe
+        asset_name: main.exe
+        asset_content_type: application/octet-stream
