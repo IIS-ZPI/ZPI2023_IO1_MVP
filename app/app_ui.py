@@ -101,8 +101,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.label = QLabel(self.page_2)
         self.label.setObjectName(u"label")
-        self.label.setTextFormat(Qt.AutoText)
-        self.label.setAlignment(Qt.AlignCenter)
+        self.label.setTextFormat(Qt.TextFormat.AutoText)
+        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_2.addWidget(self.label)
 
@@ -243,10 +243,12 @@ class Ui_MainWindow(object):
         __qtablewidgetitem8 = QTableWidgetItem()
         self.tableWidgetSessions.setVerticalHeaderItem(5, __qtablewidgetitem8)
         self.tableWidgetSessions.setObjectName(u"tableWidgetSessions")
+        self.tableWidgetSessions.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.tableWidgetSessions.setAutoFillBackground(False)
-        self.tableWidgetSessions.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.tableWidgetSessions.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.tableWidgetSessions.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tableWidgetSessions.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.tableWidgetSessions.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
+        self.tableWidgetSessions.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.tableWidgetSessions.setSelectionMode(QAbstractItemView.SelectionMode.NoSelection)
         self.tableWidgetSessions.setShowGrid(True)
         self.tableWidgetSessions.setSortingEnabled(False)
         self.tableWidgetSessions.setWordWrap(True)
@@ -341,7 +343,11 @@ class Ui_MainWindow(object):
         __qtablewidgetitem18 = QTableWidgetItem()
         self.tableWidgetMeasures.setVerticalHeaderItem(5, __qtablewidgetitem18)
         self.tableWidgetMeasures.setObjectName(u"tableWidgetMeasures")
-        self.tableWidgetMeasures.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.tableWidgetMeasures.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.tableWidgetMeasures.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
+        self.tableWidgetMeasures.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.tableWidgetMeasures.setSelectionMode(QAbstractItemView.SelectionMode.NoSelection)
+        self.tableWidgetMeasures.setShowGrid(True)
 
         self.verticalLayout_13.addWidget(self.tableWidgetMeasures)
 
@@ -406,7 +412,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

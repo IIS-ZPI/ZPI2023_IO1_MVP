@@ -1,6 +1,9 @@
 # You can ran this file from the root directory of the project by running `python -m app.main`
-from PySide6.QtCore import QDate
-from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMainWindow, QButtonGroup, QHeaderView
+from datetime import date, datetime, timedelta
+
+from PySide6.QtCore import QDate, QObject
+from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMainWindow, QButtonGroup, QHeaderView, \
+    QAbstractItemView
 from .app_ui import Ui_MainWindow
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -35,6 +38,9 @@ class MainWindow(QMainWindow):
         self.ui.pushButtonBackToMain2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
         self.ui.comboBoxSessions.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.tableWidgetSessions.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+        self.ui.tableWidgetSessions.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.ui.tableWidgetSessions.horizontalHeader().setSectionsClickable(False)
+        self.ui.tableWidgetSessions.verticalHeader().setSectionsClickable(False)
         self.ui.comboBoxSessions.setCurrentIndex(0)
         self.ui.comboBoxSessions.currentIndexChanged.connect(self.on_update_sessions)
 
@@ -55,6 +61,9 @@ class MainWindow(QMainWindow):
         self.ui.comboBoxMeasures.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.comboBoxMeasures.setCurrentIndex(0)
         self.ui.tableWidgetMeasures.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+        self.ui.tableWidgetMeasures.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.ui.tableWidgetMeasures.horizontalHeader().setSectionsClickable(False)
+        self.ui.tableWidgetMeasures.verticalHeader().setSectionsClickable(False)
         self.on_update_measures()
         self.ui.comboBoxMeasures.currentIndexChanged.connect(self.on_update_measures)
 
@@ -70,7 +79,8 @@ class MainWindow(QMainWindow):
     def setup_distribution_page(self):
         self.ui.pushButtonBackToMain3.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
 
-        self.ui.dateEdit.setDate(QDate(2023, 1, 1))
+        today = date.today() - timedelta(days=29)
+        self.ui.dateEdit.setDate(QDate(today.year, today.month, today.day))
         self.ui.comboBoxDistribution1.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.comboBoxDistribution2.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.comboBoxDistribution2.setCurrentIndex(1)
@@ -94,7 +104,8 @@ class MainWindow(QMainWindow):
 
         self.canvas = MplCanvas(hist, bins)
 
-        self.ui.verticalLayout_4.insertWidget(2, self.canvas)
+        self.ui.verticalLayout_4.replaceWidget(self.ui.widgetDistribution, self.canvas)
+        self.ui.widgetDistribution.deleteLater()
 
         self.buttonGroup.buttonClicked.connect(self.on_update_distribution)
         self.ui.comboBoxDistribution1.currentIndexChanged.connect(self.on_update_distribution)
