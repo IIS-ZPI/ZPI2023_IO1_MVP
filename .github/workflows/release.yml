@@ -1,0 +1,60 @@
+name: Create Release on PR Merge
+
+on:
+  pull_request:
+    branches:
+      - release
+    types:
+      - closed
+
+jobs:
+  create_release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+
+      - name: Get the latest tag
+        id: get_latest_tag
+        run: |
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "latest_tag=$latest_tag" >> $GITHUB_ENV
+
+      - name: Calculate new tag
+        id: calculate_new_tag
+        run: |
+          if [ -z "${{ env.latest_tag }}" ]; then
+            new_tag="2.0.0"
+          else
+            IFS='.' read -r -a parts <<< "${{ env.latest_tag }}"
+            parts[2]=$((parts[2]+1))
+            new_tag="${parts[0]}.${parts[1]}.${parts[2]}"
+          fi
+          echo "new_tag=$new_tag" >> $GITHUB_ENV
+
+      - name: Create new tag
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git tag ${{ env.new_tag }}
+          git push origin ${{ env.new_tag }}
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ env.new_tag }}
+          release_name: Release ${{ env.new_tag }}
+          body: |
+            ## Changes
+            - Merged PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
