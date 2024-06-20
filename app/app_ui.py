@@ -39,63 +39,76 @@ class Ui_MainWindow(object):
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_5.addItem(self.horizontalSpacer_4, 1, 2, 1, 1)
-
-        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.gridLayout_5.addItem(self.verticalSpacer_6, 2, 1, 1, 1)
+        self.gridLayout_5.addItem(self.horizontalSpacer_4, 3, 2, 1, 1)
 
         self.verticalLayout_5 = QVBoxLayout()
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.pushButtonGotoSessions = QPushButton(self.page)
         self.pushButtonGotoSessions.setObjectName(u"pushButtonGotoSessions")
+        font = QFont()
+        font.setPointSize(24)
+        self.pushButtonGotoSessions.setFont(font)
 
         self.verticalLayout_5.addWidget(self.pushButtonGotoSessions)
 
         self.pushButtonGotoMeasures = QPushButton(self.page)
         self.pushButtonGotoMeasures.setObjectName(u"pushButtonGotoMeasures")
+        self.pushButtonGotoMeasures.setFont(font)
 
         self.verticalLayout_5.addWidget(self.pushButtonGotoMeasures)
 
         self.pushButtonGotoDistribution = QPushButton(self.page)
         self.pushButtonGotoDistribution.setObjectName(u"pushButtonGotoDistribution")
+        self.pushButtonGotoDistribution.setFont(font)
 
         self.verticalLayout_5.addWidget(self.pushButtonGotoDistribution)
 
 
-        self.gridLayout_5.addLayout(self.verticalLayout_5, 1, 1, 1, 1)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.gridLayout_5.addItem(self.horizontalSpacer_3, 1, 0, 1, 1)
+        self.gridLayout_5.addLayout(self.verticalLayout_5, 3, 1, 1, 1)
 
         self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.gridLayout_5.addItem(self.verticalSpacer_5, 0, 0, 1, 3)
+
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.gridLayout_5.addItem(self.verticalSpacer_6, 4, 1, 1, 1)
+
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_5.addItem(self.horizontalSpacer_3, 3, 0, 1, 1)
+
+        self.label_2 = QLabel(self.page)
+        self.label_2.setObjectName(u"label_2")
+
+        self.gridLayout_5.addWidget(self.label_2, 1, 0, 1, 3)
+
+        self.verticalSpacer_13 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.gridLayout_5.addItem(self.verticalSpacer_13, 2, 0, 1, 3)
 
         self.stackedWidget.addWidget(self.page)
         self.page_2 = QWidget()
         self.page_2.setObjectName(u"page_2")
         self.gridLayout_4 = QGridLayout(self.page_2)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.verticalLayout_4 = QVBoxLayout()
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.verticalLayout_4.addItem(self.verticalSpacer_4)
+        self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
-        self.widgetDistribution = QWidget(self.page_2)
-        self.widgetDistribution.setObjectName(u"widgetDistribution")
-        self.widgetDistribution.setStyleSheet(u"background-color: rgb(0, 0, 0);")
+        self.pushButtonBackToMain3 = QPushButton(self.page_2)
+        self.pushButtonBackToMain3.setObjectName(u"pushButtonBackToMain3")
 
-        self.verticalLayout_4.addWidget(self.widgetDistribution)
+        self.horizontalLayout_2.addWidget(self.pushButtonBackToMain3)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.verticalLayout_4.addItem(self.verticalSpacer_3)
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
 
 
-        self.gridLayout_4.addLayout(self.verticalLayout_4, 1, 1, 1, 1)
+        self.gridLayout_4.addLayout(self.horizontalLayout_2, 2, 0, 1, 2)
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -155,23 +168,24 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addLayout(self.gridLayout_3, 1, 0, 1, 1)
 
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
-        self.horizontalLayout_2.addItem(self.horizontalSpacer)
+        self.verticalLayout_4.addItem(self.verticalSpacer_4)
 
-        self.pushButtonBackToMain3 = QPushButton(self.page_2)
-        self.pushButtonBackToMain3.setObjectName(u"pushButtonBackToMain3")
+        self.widgetDistribution = QWidget(self.page_2)
+        self.widgetDistribution.setObjectName(u"widgetDistribution")
+        self.widgetDistribution.setStyleSheet(u"background-color: rgb(0, 0, 0);")
 
-        self.horizontalLayout_2.addWidget(self.pushButtonBackToMain3)
+        self.verticalLayout_4.addWidget(self.widgetDistribution)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
+        self.verticalLayout_4.addItem(self.verticalSpacer_3)
 
 
-        self.gridLayout_4.addLayout(self.horizontalLayout_2, 2, 0, 1, 2)
+        self.gridLayout_4.addLayout(self.verticalLayout_4, 1, 1, 1, 1)
 
         self.stackedWidget.addWidget(self.page_2)
         self.page_3 = QWidget()
@@ -428,14 +442,15 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.pushButtonGotoSessions.setText(QCoreApplication.translate("MainWindow", u"Table of Numbers of Sessions", None))
-        self.pushButtonGotoMeasures.setText(QCoreApplication.translate("MainWindow", u"Statistical Measures", None))
-        self.pushButtonGotoDistribution.setText(QCoreApplication.translate("MainWindow", u"Changes Distribution", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:22pt;\">Distribution Changes</span></p></body></html>", None))
+        self.pushButtonGotoSessions.setText(QCoreApplication.translate("MainWindow", u"Sessions", None))
+        self.pushButtonGotoMeasures.setText(QCoreApplication.translate("MainWindow", u"Statistical measures", None))
+        self.pushButtonGotoDistribution.setText(QCoreApplication.translate("MainWindow", u"Change distribution", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:36pt;\">Currency Analysis</span></p></body></html>", None))
+        self.pushButtonBackToMain3.setText(QCoreApplication.translate("MainWindow", u"Back", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:22pt;\">Change distribution</span></p></body></html>", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"start date", None))
         self.pushButtonMonth.setText(QCoreApplication.translate("MainWindow", u"month", None))
         self.pushButtonQuarter.setText(QCoreApplication.translate("MainWindow", u"quarter", None))
-        self.pushButtonBackToMain3.setText(QCoreApplication.translate("MainWindow", u"Back", None))
         self.pushButtonBackToMain2.setText(QCoreApplication.translate("MainWindow", u"Back", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Choosen currency:", None))
         ___qtablewidgetitem = self.tableWidgetSessions.horizontalHeaderItem(0)

@@ -116,12 +116,23 @@ class MainWindow(QMainWindow):
 
     def on_update_distribution(self):
 
+        period = None
+        newDate = None
         try:
+            if self.ui.pushButtonMonth.isChecked():
+                period = AnalysisPeriod.MONTH
+                if self.ui.dateEdit.date().toPython() > date.today() - timedelta(days=30):
+                    newDate = QDate(date.today() - timedelta(days=30))
+            else:
+                period = AnalysisPeriod.QUARTER
+                if self.ui.dateEdit.date().toPython() > date.today() - timedelta(days=90):
+                    newDate= QDate(date.today() - timedelta(days=90))
+
+            self.ui.dateEdit.setDate(newDate)
             hist, bins = get_changes_distribution(
                 self.ui.comboBoxDistribution1.currentText(),
                 self.ui.comboBoxDistribution2.currentText(),
-                self.ui.dateEdit.date().toPython(),
-                AnalysisPeriod.MONTH if self.ui.pushButtonMonth.isChecked() else AnalysisPeriod.QUARTER)
+                self.ui.dateEdit.date().toPython(), period)
 
             self.canvas.plot_data(hist, bins)
             self.ui.dateEdit.setStyleSheet("")

@@ -22,7 +22,7 @@
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="1" column="2">
+        <item row="3" column="2">
          <spacer name="horizontalSpacer_4">
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
@@ -35,7 +35,60 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="1">
+        <item row="3" column="1">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QPushButton" name="pushButtonGotoSessions">
+            <property name="font">
+             <font>
+              <pointsize>24</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Sessions</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonGotoMeasures">
+            <property name="font">
+             <font>
+              <pointsize>24</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Statistical measures</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonGotoDistribution">
+            <property name="font">
+             <font>
+              <pointsize>24</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Change distribution</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="1">
          <spacer name="verticalSpacer_6">
           <property name="orientation">
            <enum>Qt::Orientation::Vertical</enum>
@@ -48,32 +101,7 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <widget class="QPushButton" name="pushButtonGotoSessions">
-            <property name="text">
-             <string>Table of Numbers of Sessions</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButtonGotoMeasures">
-            <property name="text">
-             <string>Statistical Measures</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButtonGotoDistribution">
-            <property name="text">
-             <string>Changes Distribution</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0">
+        <item row="3" column="0">
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
@@ -86,8 +114,15 @@
           </property>
          </spacer>
         </item>
-        <item row="0" column="0" colspan="3">
-         <spacer name="verticalSpacer_5">
+        <item row="1" column="0" colspan="3">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;Currency Analysis&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <spacer name="verticalSpacer_13">
           <property name="orientation">
            <enum>Qt::Orientation::Vertical</enum>
           </property>
@@ -103,43 +138,37 @@
       </widget>
       <widget class="QWidget" name="page_2">
        <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,0,0" columnstretch="0,0">
-        <item row="1" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item row="2" column="0" colspan="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <spacer name="verticalSpacer_4">
+           <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Orientation::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Policy::Fixed</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
            </spacer>
           </item>
           <item>
-           <widget class="QWidget" name="widgetDistribution" native="true">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 0, 0);</string>
+           <widget class="QPushButton" name="pushButtonBackToMain3">
+            <property name="text">
+             <string>Back</string>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="verticalSpacer_3">
+           <spacer name="horizontalSpacer_2">
             <property name="orientation">
-             <enum>Qt::Orientation::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Policy::Fixed</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
            </spacer>
@@ -151,7 +180,7 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Distribution Changes&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Change distribution&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::TextFormat::AutoText</enum>
@@ -228,37 +257,43 @@
           </item>
          </layout>
         </item>
-        <item row="2" column="0" colspan="2">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item row="1" column="1">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="verticalSpacer_4">
             <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Policy::Fixed</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>20</width>
+              <height>40</height>
              </size>
             </property>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButtonBackToMain3">
-            <property name="text">
-             <string>Back</string>
+           <widget class="QWidget" name="widgetDistribution" native="true">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2">
+           <spacer name="verticalSpacer_3">
             <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Policy::Fixed</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>20</width>
+              <height>40</height>
              </size>
             </property>
            </spacer>
