@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.pushButtonGotoSessions = QPushButton(self.page)
         self.pushButtonGotoSessions.setObjectName(u"pushButtonGotoSessions")
         font = QFont()
-        font.setPointSize(24)
+        font.setPointSize(18)
         self.pushButtonGotoSessions.setFont(font)
 
         self.verticalLayout_5.addWidget(self.pushButtonGotoSessions)
@@ -434,7 +434,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

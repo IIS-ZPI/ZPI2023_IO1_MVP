@@ -7,6 +7,7 @@
     - freezegun version 1.1.0 
     - PySide6 version 6.7.1 
     - matplotlib version 3.9.0 
+    - seaborn version 0.13.2
 ## Local Preview
 1. Install Python (install at least version 3.12)
 2. Install all dependencies (python libraries in [.requirements.txt](requirements.txt))

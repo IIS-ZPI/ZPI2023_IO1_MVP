@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_5">
@@ -26,6 +26,9 @@
          <spacer name="horizontalSpacer_4">
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Policy::Expanding</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -41,7 +44,7 @@
            <widget class="QPushButton" name="pushButtonGotoSessions">
             <property name="font">
              <font>
-              <pointsize>24</pointsize>
+              <pointsize>18</pointsize>
              </font>
             </property>
             <property name="text">
@@ -53,7 +56,7 @@
            <widget class="QPushButton" name="pushButtonGotoMeasures">
             <property name="font">
              <font>
-              <pointsize>24</pointsize>
+              <pointsize>18</pointsize>
              </font>
             </property>
             <property name="text">
@@ -65,7 +68,7 @@
            <widget class="QPushButton" name="pushButtonGotoDistribution">
             <property name="font">
              <font>
-              <pointsize>24</pointsize>
+              <pointsize>18</pointsize>
              </font>
             </property>
             <property name="text">

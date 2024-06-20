@@ -1,12 +1,12 @@
 # You can ran this file from the root directory of the project by running `python -m app.main`
-from datetime import date, datetime, timedelta
-
-from PySide6.QtCore import QDate, QObject
-from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMainWindow, QButtonGroup, QHeaderView, \
-    QAbstractItemView
-from .app_ui import Ui_MainWindow
+from datetime import date, timedelta
+from PySide6.QtCore import QDate
+from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMainWindow, QButtonGroup, QHeaderView
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from matplotlib.ticker import MaxNLocator
+import seaborn as sns
+from .app_ui import Ui_MainWindow
 from .constans import AnalysisPeriod
 from .api import get_sessions_data, get_statistical_measures, get_changes_distribution
 
@@ -33,6 +33,9 @@ class MainWindow(QMainWindow):
         self.ui.pushButtonGotoDistribution.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
         self.ui.pushButtonGotoSessions.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(2))
         self.ui.pushButtonGotoMeasures.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(3))
+        self.ui.pushButtonGotoDistribution.setStyleSheet("padding: 10px")
+        self.ui.pushButtonGotoSessions.setStyleSheet("padding: 10px")
+        self.ui.pushButtonGotoMeasures.setStyleSheet("padding: 10px")
 
     def setup_sessions_page(self):
         self.ui.pushButtonBackToMain2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
@@ -79,8 +82,7 @@ class MainWindow(QMainWindow):
     def setup_distribution_page(self):
         self.ui.pushButtonBackToMain3.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
 
-        today = date.today() - timedelta(days=30)
-        self.ui.dateEdit.setDate(QDate(today.year, today.month, today.day))
+        self.ui.dateEdit.setDate(QDate(date.today() - timedelta(days=30)))
         self.ui.comboBoxDistribution1.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.comboBoxDistribution2.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.comboBoxDistribution2.setCurrentIndex(1)
@@ -126,7 +128,7 @@ class MainWindow(QMainWindow):
             else:
                 period = AnalysisPeriod.QUARTER
                 if self.ui.dateEdit.date().toPython() > date.today() - timedelta(days=90):
-                    newDate= QDate(date.today() - timedelta(days=90))
+                    newDate = QDate(date.today() - timedelta(days=90))
 
             self.ui.dateEdit.setDate(newDate)
             hist, bins = get_changes_distribution(
@@ -150,8 +152,17 @@ class MplCanvas(FigureCanvas):
         self.plot_data(hist, bins)
 
     def plot_data(self, hist, bins):
+        bins = [f'{x:.4f}' for x in bins]  # format bins values to 4 decimal places
         self.ax.clear()
-        self.ax.hist(bins[:-1], bins, weights=hist, edgecolor='black')
+        sns.barplot(x=bins[:-1], y=hist, ax=self.ax, edgecolor='black')
+        self.ax.xaxis.set_ticks(bins[:-1])
+        self.ax.set_xticklabels(self.ax.get_xticklabels(), rotation=45)
+        self.ax.set_ylabel('number of changes')
+        self.ax.set_xlabel('Your Label Here')
+        self.fig.subplots_adjust(bottom=0.25)
+        self.ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+        self.ax.set_axisbelow(True)
+        self.ax.yaxis.grid(color='gray', linestyle='dashed')
         self.draw()
 
 
