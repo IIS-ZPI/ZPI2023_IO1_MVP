@@ -1,5 +1,10 @@
 name: Create Release on PR Merge
 
+on:
+  pull_request:
+    branches:
+      - release
+
 release:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.base_ref == 'release' && success()
