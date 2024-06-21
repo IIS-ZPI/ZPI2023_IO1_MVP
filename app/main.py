@@ -1,13 +1,14 @@
 # You can ran this file from the root directory of the project by running `python -m app.main`
+
 from datetime import date, timedelta
 from PySide6.QtCore import QDate
 from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMainWindow, QButtonGroup, QHeaderView
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.ticker import MaxNLocator
-from .app_ui import Ui_MainWindow
-from .constans import AnalysisPeriod
-from .api import get_sessions_data, get_statistical_measures, get_changes_distribution
+from app.app_ui import Ui_MainWindow
+from app.constans import AnalysisPeriod
+from app.api import get_sessions_data, get_statistical_measures, get_changes_distribution
 
 
 class MainWindow(QMainWindow):
