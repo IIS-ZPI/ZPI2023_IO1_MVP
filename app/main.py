@@ -175,7 +175,6 @@ if __name__ == "__main__":
     except Exception as e:
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Critical)
-        msg_box.setText("Error")
-        msg_box.setDetailedText(str(e))
+        msg_box.setText(str(e))
         msg_box.setWindowTitle("Error")
         msg_box.exec()
