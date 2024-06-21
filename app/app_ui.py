@@ -124,14 +124,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3 = QGridLayout()
         self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.gridLayout_3.addItem(self.verticalSpacer, 0, 0, 1, 2)
-
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.gridLayout_3.addItem(self.verticalSpacer_2, 6, 0, 1, 2)
-
         self.groupBox = QGroupBox(self.page_2)
         self.groupBox.setObjectName(u"groupBox")
         self.verticalLayout = QVBoxLayout(self.groupBox)
@@ -145,25 +137,47 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.groupBox, 2, 0, 1, 2)
 
-        self.pushButtonMonth = QPushButton(self.page_2)
-        self.pushButtonMonth.setObjectName(u"pushButtonMonth")
-
-        self.gridLayout_3.addWidget(self.pushButtonMonth, 1, 0, 1, 1)
-
-        self.comboBoxDistribution2 = QComboBox(self.page_2)
-        self.comboBoxDistribution2.setObjectName(u"comboBoxDistribution2")
-
-        self.gridLayout_3.addWidget(self.comboBoxDistribution2, 5, 0, 1, 2)
-
-        self.pushButtonQuarter = QPushButton(self.page_2)
-        self.pushButtonQuarter.setObjectName(u"pushButtonQuarter")
-
-        self.gridLayout_3.addWidget(self.pushButtonQuarter, 1, 1, 1, 1)
-
-        self.comboBoxDistribution1 = QComboBox(self.page_2)
+        self.groupBox_3 = QGroupBox(self.page_2)
+        self.groupBox_3.setObjectName(u"groupBox_3")
+        self.verticalLayout_3 = QVBoxLayout(self.groupBox_3)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.comboBoxDistribution1 = QComboBox(self.groupBox_3)
         self.comboBoxDistribution1.setObjectName(u"comboBoxDistribution1")
 
-        self.gridLayout_3.addWidget(self.comboBoxDistribution1, 4, 0, 1, 2)
+        self.verticalLayout_3.addWidget(self.comboBoxDistribution1)
+
+        self.comboBoxDistribution2 = QComboBox(self.groupBox_3)
+        self.comboBoxDistribution2.setObjectName(u"comboBoxDistribution2")
+
+        self.verticalLayout_3.addWidget(self.comboBoxDistribution2)
+
+
+        self.gridLayout_3.addWidget(self.groupBox_3, 4, 0, 1, 2)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.gridLayout_3.addItem(self.verticalSpacer, 0, 0, 1, 2)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.gridLayout_3.addItem(self.verticalSpacer_2, 5, 0, 1, 2)
+
+        self.groupBox_2 = QGroupBox(self.page_2)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.horizontalLayout_3 = QHBoxLayout(self.groupBox_2)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.pushButtonMonth = QPushButton(self.groupBox_2)
+        self.pushButtonMonth.setObjectName(u"pushButtonMonth")
+
+        self.horizontalLayout_3.addWidget(self.pushButtonMonth)
+
+        self.pushButtonQuarter = QPushButton(self.groupBox_2)
+        self.pushButtonQuarter.setObjectName(u"pushButtonQuarter")
+
+        self.horizontalLayout_3.addWidget(self.pushButtonQuarter)
+
+
+        self.gridLayout_3.addWidget(self.groupBox_2, 1, 0, 1, 2)
 
 
         self.gridLayout_4.addLayout(self.gridLayout_3, 1, 0, 1, 1)
@@ -434,7 +448,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -449,6 +463,8 @@ class Ui_MainWindow(object):
         self.pushButtonBackToMain3.setText(QCoreApplication.translate("MainWindow", u"Back", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:22pt;\">Change distribution</span></p></body></html>", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"start date", None))
+        self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"currencies", None))
+        self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"period", None))
         self.pushButtonMonth.setText(QCoreApplication.translate("MainWindow", u"month", None))
         self.pushButtonQuarter.setText(QCoreApplication.translate("MainWindow", u"quarter", None))
         self.pushButtonBackToMain2.setText(QCoreApplication.translate("MainWindow", u"Back", None))
