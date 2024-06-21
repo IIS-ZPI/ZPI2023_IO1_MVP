@@ -5,7 +5,6 @@ from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMain
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.ticker import MaxNLocator
-import seaborn as sns
 from .app_ui import Ui_MainWindow
 from .constans import AnalysisPeriod
 from .api import get_sessions_data, get_statistical_measures, get_changes_distribution
@@ -152,13 +151,13 @@ class MplCanvas(FigureCanvas):
         self.plot_data(hist, bins)
 
     def plot_data(self, hist, bins):
-        bins = [f'{x:.4f}' for x in bins]  # format bins values to 4 decimal places
         self.ax.clear()
-        sns.barplot(x=bins[:-1], y=hist, ax=self.ax, edgecolor='black')
-        self.ax.xaxis.set_ticks(bins[:-1])
+        self.ax.hist(bins[:-1], bins, weights=hist, edgecolor='black')
+        bins = [round(bin, 4) for bin in bins]
+        self.ax.set_xticks(bins)
         self.ax.set_xticklabels(self.ax.get_xticklabels(), rotation=45)
         self.ax.set_ylabel('number of changes')
-        self.ax.set_xlabel('Your Label Here')
+        self.ax.set_xlabel('intervals')
         self.fig.subplots_adjust(bottom=0.25)
         self.ax.yaxis.set_major_locator(MaxNLocator(integer=True))
         self.ax.set_axisbelow(True)
