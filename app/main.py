@@ -22,11 +22,11 @@ class MainWindow(QMainWindow):
 
         self.setup_main_page()
 
-        self.setup_distribution_page()
-
         self.setup_sessions_page()
 
         self.setup_measures_page()
+
+        self.setup_distribution_page()
 
     def setup_main_page(self):
         self.ui.pushButtonGotoDistribution.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
