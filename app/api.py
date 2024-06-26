@@ -200,8 +200,8 @@ def get_changes_distribution(
                     )
             else:
                 raise ValueError("Invalid request parameters")
-        except requests.RequestException as e:
-            print("Error:", e)
+        except requests.RequestException:
+            raise requests.RequestException("Connection to NBP API not available")
 
     currency_changes = []
     last_pair_value = api_data[0][2] / api_data[0][1]
