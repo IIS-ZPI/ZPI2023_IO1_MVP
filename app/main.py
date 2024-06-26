@@ -1,8 +1,6 @@
 # You can ran this file from the root directory of the project by running `python -m app.main`
 
 from datetime import date, timedelta
-
-import requests
 from PySide6.QtCore import QDate
 from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMainWindow, QButtonGroup, QHeaderView
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
@@ -151,7 +149,9 @@ class MainWindow(QMainWindow):
                 if self.ui.dateEdit.date().toPython() > date.today() - timedelta(days=90):
                     newDate = QDate(date.today() - timedelta(days=90))
 
+            self.ui.dateEdit.blockSignals(True)
             self.ui.dateEdit.setDate(newDate)
+            self.ui.dateEdit.blockSignals(False)
             hist, bins = get_changes_distribution(
                 self.ui.comboBoxDistribution1.currentText(),
                 self.ui.comboBoxDistribution2.currentText(),
@@ -160,7 +160,9 @@ class MainWindow(QMainWindow):
             self.canvas.plot_data(hist, bins)
 
         except Exception as e:
+            self.ui.dateEdit.blockSignals(True)
             self.ui.dateEdit.setDate(self.prev_date)
+            self.ui.dateEdit.blockSignals(False)
             self.prev_date = self.ui.dateEdit.date()
             if self.gui_initialized:
                 msg_box = QMessageBox()
