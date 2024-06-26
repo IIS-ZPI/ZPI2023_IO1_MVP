@@ -1,6 +1,9 @@
 from datetime import date, timedelta
 
 import pytest
+import requests
+
+from unittest.mock import patch
 
 from app.api import get_changes_distribution
 from app.constans import AnalysisPeriod
@@ -119,3 +122,13 @@ def test_valid_requests():
     assert len(hist) == 14
     assert len(bins) == 15
     assert sum(hist) <= 80  # in last 110 days there are at least 30 weekend's days
+
+@patch('app.api.requests.get')
+def test_no_internet_connection(mock_get):
+    """
+    Test case for testing function behavior with no internet connection.
+    """
+    mock_get.side_effect = requests.RequestException("Connection to NBP API not available")
+    with pytest.raises(requests.RequestException) as e:
+        get_changes_distribution("EUR", "USD", date(2023, 9, 9), AnalysisPeriod.QUARTER)
+    assert str(e.value) == "Connection to NBP API not available"
