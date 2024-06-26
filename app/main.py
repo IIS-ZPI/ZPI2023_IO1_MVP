@@ -12,6 +12,8 @@ from app.api import get_sessions_data, get_statistical_measures, get_changes_dis
 
 
 class MainWindow(QMainWindow):
+    gui_initialized = False
+
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.ui = Ui_MainWindow()
@@ -28,6 +30,7 @@ class MainWindow(QMainWindow):
         self.setup_measures_page()
 
         self.setup_distribution_page()
+        self.gui_initialized = True
 
     def setup_main_page(self):
         self.ui.pushButtonGotoDistribution.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
@@ -50,13 +53,23 @@ class MainWindow(QMainWindow):
         self.on_update_sessions()
 
     def on_update_sessions(self):
-        for period in AnalysisPeriod:
-            data = get_sessions_data(self.ui.comboBoxSessions.currentText(), period)
-            i = 0
-            for value in data:
-                item = QTableWidgetItem(str(value))
-                self.ui.tableWidgetSessions.setItem(period.value - 1, i, item)
-                i += 1
+        try:
+            for period in AnalysisPeriod:
+                data = get_sessions_data(self.ui.comboBoxSessions.currentText(), period)
+                i = 0
+                for value in data:
+                    item = QTableWidgetItem(str(value))
+                    self.ui.tableWidgetSessions.setItem(period.value - 1, i, item)
+                    i += 1
+        except Exception as e:
+            if self.gui_initialized:
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Critical)
+                msg_box.setText(str(e))
+                msg_box.setWindowTitle("Error")
+                msg_box.show()
+            else:
+                raise
 
     def setup_measures_page(self):
         self.ui.pushButtonBackToMain1.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
@@ -71,13 +84,23 @@ class MainWindow(QMainWindow):
         self.ui.comboBoxMeasures.currentIndexChanged.connect(self.on_update_measures)
 
     def on_update_measures(self):
-        for period in AnalysisPeriod:
-            data = get_statistical_measures(self.ui.comboBoxMeasures.currentText(), period)
-            i = 0
-            for value in data:
-                item = QTableWidgetItem(str(value.__format__("0.6f")))
-                self.ui.tableWidgetMeasures.setItem(period.value - 1, i, item)
-                i += 1
+        try:
+            for period in AnalysisPeriod:
+                data = get_statistical_measures(self.ui.comboBoxMeasures.currentText(), period)
+                i = 0
+                for value in data:
+                    item = QTableWidgetItem(str(value.__format__("0.6f")))
+                    self.ui.tableWidgetMeasures.setItem(period.value - 1, i, item)
+                    i += 1
+        except Exception as e:
+            if self.gui_initialized:
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Critical)
+                msg_box.setText(str(e))
+                msg_box.setWindowTitle("Error")
+                msg_box.show()
+            else:
+                raise
 
     def setup_distribution_page(self):
         self.ui.pushButtonBackToMain3.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
@@ -98,13 +121,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButtonQuarter.setCheckable(True)
         self.ui.pushButtonQuarter.setChecked(False)
 
-        hist, bins = get_changes_distribution(
-            self.ui.comboBoxDistribution1.currentText(),
-            self.ui.comboBoxDistribution2.currentText(),
-            self.ui.dateEdit.date().toPython(),
-            AnalysisPeriod.MONTH)
-
-        self.canvas = MplCanvas(hist, bins)
+        self.canvas = MplCanvas()
 
         self.ui.verticalLayout_4.replaceWidget(self.ui.widgetDistribution, self.canvas)
         self.ui.widgetDistribution.deleteLater()
@@ -115,6 +132,8 @@ class MainWindow(QMainWindow):
 
         self.prev_date = None
         self.ui.dateEdit.dateChanged.connect(self.on_update_distribution)
+
+        self.on_update_distribution()
 
     def on_update_distribution(self):
 
@@ -130,26 +149,36 @@ class MainWindow(QMainWindow):
                 if self.ui.dateEdit.date().toPython() > date.today() - timedelta(days=90):
                     newDate = QDate(date.today() - timedelta(days=90))
 
+            self.ui.dateEdit.blockSignals(True)
             self.ui.dateEdit.setDate(newDate)
+            self.ui.dateEdit.blockSignals(False)
             hist, bins = get_changes_distribution(
                 self.ui.comboBoxDistribution1.currentText(),
                 self.ui.comboBoxDistribution2.currentText(),
                 self.ui.dateEdit.date().toPython(), period)
 
             self.canvas.plot_data(hist, bins)
-            self.ui.dateEdit.setStyleSheet("")
+
         except Exception as e:
+            self.ui.dateEdit.blockSignals(True)
             self.ui.dateEdit.setDate(self.prev_date)
-        finally:
+            self.ui.dateEdit.blockSignals(False)
             self.prev_date = self.ui.dateEdit.date()
+            if self.gui_initialized:
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Critical)
+                msg_box.setText(str(e))
+                msg_box.setWindowTitle("Error")
+                msg_box.show()
+            else:
+                raise
 
 
 class MplCanvas(FigureCanvas):
-    def __init__(self, hist, bins):
+    def __init__(self):
         self.fig = Figure()
         self.ax = self.fig.add_subplot(111)
         super().__init__(self.fig)
-        self.plot_data(hist, bins)
 
     def plot_data(self, hist, bins):
         self.ax.clear()
