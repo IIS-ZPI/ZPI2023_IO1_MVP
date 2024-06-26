@@ -1,8 +1,11 @@
 import pytest
+import requests
+
+from freezegun import freeze_time
+from unittest.mock import patch
 
 from app.constans import AnalysisPeriod
 from app.api import get_sessions_data
-from freezegun import freeze_time
 
 
 def test_invalid_currency():
@@ -80,3 +83,14 @@ def test_valid_requests():
     assert down == 5
     assert steady == 0
     pass
+
+@freeze_time("2024-05-25")
+@patch('app.api.requests.get')
+def test_no_internet_connection(mock_get):
+    """
+    Test case for testing function behavior with no internet connection.
+    """
+    mock_get.side_effect = requests.RequestException("Connection to NBP API not available")
+    with pytest.raises(requests.RequestException) as e:
+        get_sessions_data("EUR", AnalysisPeriod.MONTH)
+    assert str(e.value) == "Connection to NBP API not available"
