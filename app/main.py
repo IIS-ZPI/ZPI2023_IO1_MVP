@@ -1,16 +1,14 @@
 # You can ran this file from the root directory of the project by running `python -m app.main`
-from datetime import date, datetime, timedelta
 
-from PySide6.QtCore import QDate, QObject
-from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMainWindow, QButtonGroup, QHeaderView, \
-    QAbstractItemView
-
+from datetime import date, timedelta
+from PySide6.QtCore import QDate
+from PySide6.QtWidgets import QApplication, QMessageBox, QTableWidgetItem, QMainWindow, QButtonGroup, QHeaderView
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-
-from app.api import get_sessions_data, get_statistical_measures, get_changes_distribution
+from matplotlib.ticker import MaxNLocator
 from app.app_ui import Ui_MainWindow
 from app.constans import AnalysisPeriod
+from app.api import get_sessions_data, get_statistical_measures, get_changes_distribution
 
 
 class MainWindow(QMainWindow):
@@ -25,16 +23,19 @@ class MainWindow(QMainWindow):
 
         self.setup_main_page()
 
-        self.setup_distribution_page()
-
         self.setup_sessions_page()
 
         self.setup_measures_page()
+
+        self.setup_distribution_page()
 
     def setup_main_page(self):
         self.ui.pushButtonGotoDistribution.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
         self.ui.pushButtonGotoSessions.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(2))
         self.ui.pushButtonGotoMeasures.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(3))
+        self.ui.pushButtonGotoDistribution.setStyleSheet("padding: 10px")
+        self.ui.pushButtonGotoSessions.setStyleSheet("padding: 10px")
+        self.ui.pushButtonGotoMeasures.setStyleSheet("padding: 10px")
 
     def setup_sessions_page(self):
         self.ui.pushButtonBackToMain2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
@@ -81,8 +82,7 @@ class MainWindow(QMainWindow):
     def setup_distribution_page(self):
         self.ui.pushButtonBackToMain3.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(0))
 
-        today = date.today() - timedelta(days=29)
-        self.ui.dateEdit.setDate(QDate(today.year, today.month, today.day))
+        self.ui.dateEdit.setDate(QDate(date.today() - timedelta(days=30)))
         self.ui.comboBoxDistribution1.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.comboBoxDistribution2.addItems(["EUR", "USD", "GBP", "JPY", "CHF"])
         self.ui.comboBoxDistribution2.setCurrentIndex(1)
@@ -112,16 +112,36 @@ class MainWindow(QMainWindow):
         self.buttonGroup.buttonClicked.connect(self.on_update_distribution)
         self.ui.comboBoxDistribution1.currentIndexChanged.connect(self.on_update_distribution)
         self.ui.comboBoxDistribution2.currentIndexChanged.connect(self.on_update_distribution)
+
+        self.prev_date = None
         self.ui.dateEdit.dateChanged.connect(self.on_update_distribution)
 
     def on_update_distribution(self):
-        hist, bins = get_changes_distribution(
-            self.ui.comboBoxDistribution1.currentText(),
-            self.ui.comboBoxDistribution2.currentText(),
-            self.ui.dateEdit.date().toPython(),
-            AnalysisPeriod.MONTH if self.ui.pushButtonMonth.isChecked() else AnalysisPeriod.QUARTER)
 
-        self.canvas.plot_data(hist, bins)
+        period = None
+        newDate = None
+        try:
+            if self.ui.pushButtonMonth.isChecked():
+                period = AnalysisPeriod.MONTH
+                if self.ui.dateEdit.date().toPython() > date.today() - timedelta(days=30):
+                    newDate = QDate(date.today() - timedelta(days=30))
+            else:
+                period = AnalysisPeriod.QUARTER
+                if self.ui.dateEdit.date().toPython() > date.today() - timedelta(days=90):
+                    newDate = QDate(date.today() - timedelta(days=90))
+
+            self.ui.dateEdit.setDate(newDate)
+            hist, bins = get_changes_distribution(
+                self.ui.comboBoxDistribution1.currentText(),
+                self.ui.comboBoxDistribution2.currentText(),
+                self.ui.dateEdit.date().toPython(), period)
+
+            self.canvas.plot_data(hist, bins)
+            self.ui.dateEdit.setStyleSheet("")
+        except Exception as e:
+            self.ui.dateEdit.setDate(self.prev_date)
+        finally:
+            self.prev_date = self.ui.dateEdit.date()
 
 
 class MplCanvas(FigureCanvas):
@@ -134,6 +154,15 @@ class MplCanvas(FigureCanvas):
     def plot_data(self, hist, bins):
         self.ax.clear()
         self.ax.hist(bins[:-1], bins, weights=hist, edgecolor='black')
+        bins = [round(bin, 4) for bin in bins]
+        self.ax.set_xticks(bins)
+        self.ax.set_xticklabels(self.ax.get_xticklabels(), rotation=45)
+        self.ax.set_ylabel('number of changes')
+        self.ax.set_xlabel('intervals')
+        self.fig.subplots_adjust(bottom=0.25)
+        self.ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+        self.ax.set_axisbelow(True)
+        self.ax.yaxis.grid(color='gray', linestyle='dashed')
         self.draw()
 
 
@@ -147,7 +176,6 @@ if __name__ == "__main__":
     except Exception as e:
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Critical)
-        msg_box.setText("Error")
-        msg_box.setDetailedText(str(e))
+        msg_box.setText(str(e))
         msg_box.setWindowTitle("Error")
         msg_box.exec()
