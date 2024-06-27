@@ -94,3 +94,55 @@ def test_no_internet_connection(mock_get):
     with pytest.raises(requests.RequestException) as e:
         get_sessions_data("EUR", AnalysisPeriod.MONTH)
     assert str(e.value) == "Connection to NBP API not available"
+
+@freeze_time("2024-06-27")
+def test_analysis_periods():
+    """
+    Test of determine the number of rising, falling and
+    unchanged sessions for the periods of the last 1 week, 2 weeks, 1
+    month, 1 quarter, half a year and 1 year for the currency selected by
+    the user using the program option
+    """
+    sessions_week = get_sessions_data('USD', AnalysisPeriod.WEEK)
+    assert isinstance(sessions_week, tuple)
+    assert len(sessions_week) == 3
+    assert all(isinstance(s, int) for s in sessions_week)
+    assert sessions_week == (1, 1, 0)
+
+    sessions_2_weeks = get_sessions_data('USD', AnalysisPeriod.TWO_WEEKS)
+    assert isinstance(sessions_2_weeks, tuple)
+    assert len(sessions_2_weeks) == 3
+    assert all(isinstance(s, int) for s in sessions_2_weeks)
+    assert sessions_2_weeks == (2, 2, 0)
+
+    sessions_month = get_sessions_data('USD', AnalysisPeriod.MONTH)
+    assert isinstance(sessions_month, tuple)
+    assert len(sessions_month) == 3
+    assert all(isinstance(s, int) for s in sessions_month)
+    assert sessions_month == (6, 5, 0)
+
+    sessions_quarter = get_sessions_data('USD', AnalysisPeriod.QUARTER)
+    assert isinstance(sessions_quarter, tuple)
+    assert len(sessions_quarter) == 3
+    assert all(isinstance(s, int) for s in sessions_quarter)
+    assert sessions_quarter == (15, 15, 0)
+
+    sessions_half_year = get_sessions_data('USD', AnalysisPeriod.HALF_YEAR)
+    assert isinstance(sessions_half_year, tuple)
+    assert len(sessions_half_year) == 3
+    assert all(isinstance(s, int) for s in sessions_half_year)
+    assert sessions_half_year == (32, 31, 0)
+
+    sessions_year = get_sessions_data('USD', AnalysisPeriod.YEAR)
+    assert isinstance(sessions_year, tuple)
+    assert len(sessions_year) == 3
+    assert all(isinstance(s, int) for s in sessions_year)
+    assert sessions_year == (59, 58, 0)
+
+    sessions_year_eur = get_sessions_data('EUR', AnalysisPeriod.YEAR)
+    assert isinstance(sessions_year_eur, tuple)
+    assert len(sessions_year_eur) == 3
+    assert all(isinstance(s, int) for s in sessions_year_eur)
+    assert sessions_year_eur == (62, 63, 0)
+
+    pass
