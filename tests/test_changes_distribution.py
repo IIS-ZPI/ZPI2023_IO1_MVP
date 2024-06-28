@@ -6,6 +6,8 @@ import requests
 
 from unittest.mock import patch
 
+from freezegun import freeze_time
+
 from app.api import get_changes_distribution
 from app.constans import AnalysisPeriod
 
@@ -134,6 +136,8 @@ def test_no_internet_connection(mock_get):
         get_changes_distribution("EUR", "USD", date(2023, 9, 9), AnalysisPeriod.QUARTER)
     assert str(e.value) == "Connection to NBP API not available"
 
+
+@freeze_time("2024-06-27")
 def test_get_changes_distribution():
     """
     Test of determine distribution of monthly or quarterly
