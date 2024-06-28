@@ -50,8 +50,8 @@ def get_sessions_data(
             data = response.json()
         else:
             raise ValueError("Invalid request parameters")
-    except requests.RequestException as e:
-        print("Error:", e)
+    except requests.RequestException:
+        raise requests.RequestException("Connection to NBP API not available")
 
     rising_sessions = 0
     falling_sessions = 0
@@ -120,8 +120,8 @@ def get_statistical_measures(
             data = response.json()
         else:
             raise ValueError("Invalid request parameters")
-    except requests.RequestException as e:
-        print("Error:", e)
+    except requests.RequestException:
+        raise requests.RequestException("Connection to NBP API not available")
 
     mid_values = [rate['mid'] for rate in data['rates']]
     mid_values.sort()
@@ -200,8 +200,8 @@ def get_changes_distribution(
                     )
             else:
                 raise ValueError("Invalid request parameters")
-        except requests.RequestException as e:
-            print("Error:", e)
+        except requests.RequestException:
+            raise requests.RequestException("Connection to NBP API not available")
 
     currency_changes = []
     last_pair_value = api_data[0][2] / api_data[0][1]
