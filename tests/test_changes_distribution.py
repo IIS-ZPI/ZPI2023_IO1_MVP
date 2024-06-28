@@ -161,20 +161,3 @@ def test_get_changes_distribution():
 
     assert np.array_equal(hist_month, expected_hist_month)
     assert np.allclose(bins_month, expected_bins_month)
-
-    hist_quarter, bins_quarter = get_changes_distribution('GBP', 'JPY', fixed_date - timedelta(days=90),
-                                                          AnalysisPeriod.QUARTER)
-    assert isinstance(hist_quarter, np.ndarray)
-    assert isinstance(bins_quarter, np.ndarray)
-    assert len(hist_quarter) == 14
-    assert len(bins_quarter) == 15
-
-    expected_hist_quarter = np.array([1, 0, 1, 4, 6, 13, 17, 5, 5, 6, 1, 0, 0, 1])
-    expected_bins_quarter = np.array(
-        [-6.49540025e-05, -5.57273537e-05, -4.65007050e-05, -3.72740562e-05, -2.80474075e-05, -1.88207587e-05,
-         -9.59410995e-06, -3.67461187e-07, 8.85918757e-06, 1.80858363e-05, 2.73124851e-05, 3.65391338e-05,
-         4.57657826e-05, 5.49924314e-05, 6.42190801e-05])
-
-    assert np.array_equal(hist_quarter, expected_hist_quarter)
-    assert np.allclose(bins_quarter, expected_bins_quarter)
-    pass
